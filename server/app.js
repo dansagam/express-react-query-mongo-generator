@@ -5,6 +5,7 @@ import { config } from "dotenv"
 import path from 'path'
 import morgan from 'morgan'
 import connectDB from './db/connectDB.js'
+import customerRoutes from './routes/customerRoutes.js'
 
 
 config()
@@ -14,6 +15,14 @@ const app = express()
 app.use(cookieParser())
 app.use(cors())
 app.use(express.json())
+
+
+
+
+
+
+
+app.use('/api/v2/customers', customerRoutes)
 
 if (process.env.NODE_ENV === 'development') {
    app.use(morgan('dev'))
