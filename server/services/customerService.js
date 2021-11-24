@@ -1,38 +1,86 @@
 import Customer from "../models/cutomerModels.js"
 
 
-const getAllCustomers = (newData, callback) => {
-   Customer.find(newData, callback)
+const getAllCustomers = (newData = {}) => {
+   return new Promise((resolve, reject) => {
+      Customer.find(newData).then((result) => {
+         if (result && result.length > 0) {
+            resolve(result)
+         } else if (result && result.length === 0) {
+            reject(new Error('No Customer found'))
+         } else {
+            reject(new Error('Query not Commplete'))
+         }
+      })
+   })
 }
-// const getAllCustomers = async (newData, callback) => {
-//    return await Customer.find(newData, callback)
-// }
-// const getCustomerById = async (id, callback) => {
-//    await Customer.findById(id, callback)
-// }
-// const addCustomer = async (newData) => {
-//    await Customer.create(newData)
-// }
-// const deleteCustomerById = async (id) => {
-//    await Customer.findByIdAndDelete(id)
-// }
-// const updateCustomer = async (id, newData) => {
-//    await Customer.findByIdAndUpdate(id, newData, { new: true })
-// }
-const getCustomerById = (id, callback) => {
-   Customer.findById(id, callback)
+const getCustomerById = (id) => {
+   return new Promise((resolve, reject) => {
+      Customer.findById(id).then(result => {
+         if (result) {
+            resolve(result)
+         } else {
+            reject(new Error('No Customer found'))
+         }
+      })
+   })
 }
-const addCustomer = (newData, callback) => {
-   Customer.create(newData, callback)
+const addCustomer = (newData) => {
+   return new Promise((resolve, reject) => {
+      Customer.create(newData)
+         .then(result => {
+            if (result) {
+               resolve(result)
+            } else {
+               reject(new Error('Customer could not be ad, please check your data'))
+            }
+         })
+   })
 }
 
-const deleteCustomerById = (id, callback) => {
-   Customer.findByIdAndDelete(id, callback)
+const deleteCustomerById = (id) => {
+   return new Promise((resolve, reject) => {
+      Customer.findByIdAndDelete(id)
+         .then(result => {
+            if (result) {
+               resolve(result)
+            } else {
+               reject(new Error('Customer could no be deleted'))
+            }
+         })
+   })
 }
 
-const updateCustomer = async (id, newData, callback) => {
-   await Customer.findByIdAndUpdate(id, newData, { new: true }, callback)
+const updateCustomer = (id, newData) => {
+   return new Promise((resolve, reject) => {
+      Customer.findByIdAndUpdate(id, newData, { new: true })
+         .then(result => {
+            if (result) {
+               resolve(result)
+            } else {
+               reject(new Error('Customer detail could not be updated, please check yout data'))
+            }
+         })
+   })
 }
+
+// const getAllCustomers = (newData, callback) => {
+//    Customer.find(newData, callback)
+// }
+// const getCustomerById = (id, callback) => {
+//    Customer.findById(id, callback)
+// }
+// const addCustomer = (newData, callback) => {
+//    Customer.create(newData, callback)
+// }
+
+// const deleteCustomerById = (id, callback) => {
+//    Customer.findByIdAndDelete(id, callback)
+// }
+
+// const updateCustomer = async (id, newData, callback) => {
+//    await Customer.findByIdAndUpdate(id, newData, { new: true }, callback)
+// }
 
 
 const customerServices = {

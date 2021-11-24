@@ -2,6 +2,7 @@ import express from "express"
 const router = express.Router()
 import {
    addCustomer,
+   deleteCustomer,
    getAllCustomerList,
    getCustomerByid,
    updateCustomer
@@ -16,6 +17,6 @@ router.route('/')
 router.route('/:id')
    .get(getCustomerByid)
    .put(updateCustomer)
-   .delete()
+   .delete(deleteCustomer)
 
 export default router

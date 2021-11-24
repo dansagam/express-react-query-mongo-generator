@@ -6,6 +6,7 @@ import path from 'path'
 import morgan from 'morgan'
 import connectDB from './db/connectDB.js'
 import customerRoutes from './routes/customerRoutes.js'
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 
 
 config()
@@ -43,6 +44,9 @@ if (process.env.NODE_ENV === 'production') {
       res.send('API is running')
    })
 }
+
+app.use(notFound)
+app.use(errorHandler)
 
 
 export default app
