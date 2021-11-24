@@ -1,12 +1,19 @@
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
+import Customer from './models/cutomerModels.js'
+import { customers } from './data/customerData.js'
+import connectDB from './db/connectDB.js'
 
-config({ path: './config/config.env' })
+config()
 
 connectDB()
 
 const importData = async () => {
    try {
+      await Promise.all([
+         Customer.deleteMany()
+      ])
+      await Customer.insertMany(customers)
       console.log('data imported')
       process.exit()
    } catch (err) {
@@ -17,6 +24,9 @@ const importData = async () => {
 
 const destroyData = async () => {
    try {
+      await Promise.all([
+         Customer.deleteMany()
+      ])
       console.log('Data destroyed')
       process.exit()
 
