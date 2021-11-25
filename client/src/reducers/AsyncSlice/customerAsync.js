@@ -7,7 +7,7 @@ import {
    updateCustomerFunc
 } from "../../asyncFunction/customerAsyncFunc";
 
-export const getCustomers = createAsyncThunk('customer/getCustomers',
+export const getCustomersFromServer = createAsyncThunk('customer/getCustomers',
    async (arg, { getState, rejectWithValue }) => {
       try {
          const { data } = await getCustomersFunc()
@@ -17,7 +17,7 @@ export const getCustomers = createAsyncThunk('customer/getCustomers',
       }
    }
 )
-export const getCustomerById = createAsyncThunk('customer/getCustomerById',
+export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerById',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await getCustomerByIdFunc(id)
@@ -27,7 +27,7 @@ export const getCustomerById = createAsyncThunk('customer/getCustomerById',
       }
    }
 )
-export const addNewCustomer = createAsyncThunk('customer/addNewCustomer',
+export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomer',
    async (newData, { rejectWithValue }) => {
       try {
          const { first_name, last_name, mobile_number, age, dob } = newData
@@ -58,7 +58,7 @@ export const addNewCustomer = createAsyncThunk('customer/addNewCustomer',
 )
 
 
-export const deleteCustomer = createAsyncThunk('customer/deleteCustomer',
+export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustomer',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await deleteCustomerFunc(id)
@@ -69,7 +69,7 @@ export const deleteCustomer = createAsyncThunk('customer/deleteCustomer',
    }
 )
 
-export const updatedCustomer = createAsyncThunk('customer/updateCustomer',
+export const updatedCustomerToServer = createAsyncThunk('customer/updateCustomer',
    async (receivedData, { rejectWithValue }) => {
       try {
          const { _id, first_name, last_name, mobile_number, age, dob } = receivedData
