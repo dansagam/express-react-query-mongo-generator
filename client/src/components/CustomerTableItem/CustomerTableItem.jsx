@@ -21,7 +21,7 @@ const Row = (props) => {
    const [open, setOpen] = useState(false)
 
    const handlerCustomerItemDoubleClick = useCallback(() => {
-      return history(`${customerRow._id}`)
+      return history(`/customers/${customerRow._id}`)
    }, [history, customerRow])
 
    return (

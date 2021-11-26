@@ -29,17 +29,11 @@ function App() {
                   name='customerlist-route'
                   path={'customers'}
                   element={<CustomerRoutes />}
-               >
-                  <Route
-                     name='customer-route'
-                     path={':customerId'}
-                     element={<CustomerEdit />}
-                  />
-               </Route>
+               />
                <Route
                   name='customer-route'
-                  path={'/customer/:customerId'}
-                  element={<CustomerRoutes />}
+                  path={'customers/:customerId'}
+                  element={<CustomerEdit />}
                />
                <Route
                   name='no-match'
