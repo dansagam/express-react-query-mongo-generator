@@ -79,13 +79,13 @@ const Row = (props) => {
                                  {customerRow.phone_number.mobile_phone_number}
                               </TableCell>
                               <TableCell align='right'>
-                                 {`${currentAge(customerRow.date_of_birth)}`}
+                                 {`${currentAge(customerRow.dob)}`}
                               </TableCell>
                               <TableCell align='right'>
-                                 {transformDate(customerRow.date_of_birth)}
+                                 {transformDate(customerRow.dob)}
                               </TableCell>
                               <TableCell align='right'>
-                                 {transformDate(customerRow.date_of_birth)}
+                                 {transformDate(customerRow.createdAt)}
                               </TableCell>
                            </TableRow>
                         </TableBody>

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Express Template generator",
+  "name": "Express-MongoDb Generator",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,6 +16,11 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "/Images/icons8-customer-80.png",
+      "type": "image/png",
+      "sizes": "80x80"
     }
   ],
   "start_url": ".",

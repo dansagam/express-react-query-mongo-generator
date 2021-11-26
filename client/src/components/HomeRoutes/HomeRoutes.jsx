@@ -1,23 +1,32 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Typography, Card, CardActions, CardMedia, Button, CardContent } from '@mui/material'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const HomeRoutes = () => {
+   const navigate = useNavigate()
    return (
       <div>
-         kddiidjdjj
-         <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Necessitatibus, explicabo! Tenetur sed aliquid magni,
-            laudantium quod est iure ipsum pariatur obcaecati vel, sit molestiae,
-            perferendis ipsam repellendus rerum earum inventore.
-            Voluptate accusantium nobis quod doloremque voluptatibus illo,
-            fuga ullam reprehenderit natus quis aliquid dignissimos veniam magnam dicta
-            sed dolorum aperiam excepturi amet officia quidem adipisci, maiores commodi autem.
-            Amet maiores voluptatum porro maxime quas odio quidem a rem ex officia officiis,
-            error quis! Aliquid culpa itaque impedit, ipsam, assumenda tenetur amet doloremque
-            accusamus iure id dolore quam omnis ullam? Perspiciatis aspernatur vitae quod eum sit
-            temporibus assumenda atque ab dicta!
-         </p>
+         <Card sx={{ maxWidth: 345, textAlign: 'center', mt: 3 }} >
+            <CardMedia
+               component="img"
+               height="350"
+               image="/Images/1467853.svg"
+               alt="Presentation"
+            />
+            <CardContent>
+               <Typography gutterBottom variant="h5" component="div">
+                  Welcome to the landing page the simple app to get up started on the Express
+               </Typography>
+               <Typography variant="body2" color="text.secondary">
+                  Do you want to see the list of Customers?
+               </Typography>
+            </CardContent>
+            <CardActions >
+               <Button size="small" disabled>Disabled</Button>
+               <Button size="small" onClick={() => navigate('/customers')}>
+                  Customer List
+               </Button>
+            </CardActions>
+         </Card>
          <Outlet />
       </div>
    )
