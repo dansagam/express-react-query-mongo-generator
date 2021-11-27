@@ -1,173 +1,183 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
    Grid,
-   FormControl,
    TextField,
-   FormControlLabel,
    Button,
-   Slider,
-   MenuItem,
-   Radio,
-   RadioGroup,
-   FormLabel,
-   Select
+   Paper,
+   // Stack
 } from '@mui/material'
+// import { DatePicker, LocalizationProvider } from '@mui/lab';
+// import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { phoneTestFunc } from '../../Utils/dateFuncFormater';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCustomerByIdFromServer } from '../../reducers/AsyncSlice/customerAsync';
+import { useParams } from 'react-router-dom';
+// import AdapterDateFns from '@mui/lab/AdapterDayjs';
 
-const defaultValues = {
-   name: "",
-   age: 0,
-   gender: "",
-   os: "",
-   favoriteNumber: 0,
-};
 
 const CustomerEdit = () => {
-
-   const [formValues, setFormValues] = useState(defaultValues);
-   const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormValues({
-         ...formValues,
-         [name]: value,
-      });
-   };
-   const handleSliderChange = (name) => (e, value) => {
-      setFormValues({
-         ...formValues,
-         [name]: value,
-      });
-   };
+   const dispatch = useDispatch()
+   const { customerId } = useParams()
+   const { customer } = useSelector(({ customer }) => customer)
+   const [firstName, setFirstName] = useState('')
+   const [lastName, setLastName] = useState('')
+   const [middleName, setMiddleName] = useState('')
+   const [phoneNumber, setPhoneNumber] = useState('')
+   const [aphoneNumber, setAPhoneNumber] = useState('')
+   const [age, setAge] = useState(0)
+   const [pMsg, setPMsg] = useState(false)
+   const [apMsg, setAPMsg] = useState(false)
+   const handleChange = useCallback((e) => {
+      if (e.target.name === 'first_name') {
+         return setFirstName(e.target.value)
+      } else if (e.target.name === 'last_name') {
+         return setLastName(e.target.value)
+      } else if (e.target.name === 'middle_name') {
+         return setMiddleName(e.target.value)
+      } else if (e.target.name === 'mobile_phone_number') {
+         if (phoneTestFunc(e.target.value)) {
+            setPMsg(false)
+         } else {
+            setPMsg(true)
+         }
+         return setPhoneNumber(e.target.value)
+      } else if (e.target.name === 'additional_number') {
+         if (phoneTestFunc(e.target.value)) {
+            setAPMsg(false)
+         } else {
+            setAPMsg(true)
+         }
+         return setAPhoneNumber(e.target.value)
+      } else if (e.target.name === 'age') {
+         return setAge(e.target.value)
+      } else return
+   }, [])
    const handleSubmit = (event) => {
       event.preventDefault();
-      console.log(formValues);
+      if (!apMsg && !pMsg) {
+         return
+      }
    };
+
+   useEffect(() => {
+      if (!customer.name.first_name) {
+         dispatch(getCustomerByIdFromServer(customerId))
+      } else {
+         setFirstName(customer.name.first_name)
+         setLastName(customer.name.last_name)
+         setMiddleName(customer.name.middle_name)
+         setPhoneNumber(customer.phone_number.mobile_phone_number)
+         setAPhoneNumber(customer.phone_number.home_phone_number)
+      }
+
+   }, [dispatch, customerId, customer])
    return (
-      <form onSubmit={handleSubmit}>
-         <Grid container alignItems="center"
-            justifyContent={'center'} spacing={2}
-            justify="center" direction="column">
-            <Grid item>
-               <TextField
-                  id="name-input"
-                  name="first_name"
-                  label="First Name"
-                  type="text"
-                  value={formValues.name}
-                  onChange={handleInputChange}
-               />
-            </Grid>
-            <Grid item>
-               <TextField
-                  id="name-input"
-                  name="middle_name"
-                  label="Middle Name"
-                  type="text"
-                  value={formValues.name}
-                  onChange={handleInputChange}
-               />
-            </Grid>
-            <Grid item>
-               <TextField
-                  id="name-input"
-                  name="last_name"
-                  label="Last Name"
-                  type="text"
-                  value={formValues.name}
-                  onChange={handleInputChange}
-               />
-            </Grid>
-            <Grid item>
-               <TextField
-                  id="age-input"
-                  name="age"
-                  label="Age"
-                  type="number"
-                  value={formValues.age}
-                  onChange={handleInputChange}
-               />
-            </Grid>
-            <Grid item>
-               <FormControl>
-                  <FormLabel>Gender</FormLabel>
-                  <RadioGroup
-                     name="gender"
-                     value={formValues.gender}
-                     onChange={handleInputChange}
-                     row
-                  >
-                     <FormControlLabel
-                        key="male"
-                        value="male"
-                        control={<Radio size="small" />}
-                        label="Male"
-                     />
-                     <FormControlLabel
-                        key="female"
-                        value="female"
-                        control={<Radio size="small" />}
-                        label="Female"
-                     />
-                     <FormControlLabel
-                        key="other"
-                        value="other"
-                        control={<Radio size="small" />}
-                        label="Other"
-                     />
-                  </RadioGroup>
-               </FormControl>
-            </Grid>
-            <Grid item>
-               <FormControl>
-                  <Select
-                     name="os"
-                     value={formValues.os}
-                     onChange={handleInputChange}
-                  >
-                     <MenuItem key="mac" value="mac">
-                        Mac
-                     </MenuItem>
-                     <MenuItem key="windows" value="windows">
-                        Windows
-                     </MenuItem>
-                     <MenuItem key="linux " value="linux">
-                        Linux
-                     </MenuItem>
-                  </Select>
-               </FormControl>
-            </Grid>
-            <Grid item>
-               <div style={{ width: "400px" }}>
-                  Favorite Number
-                  <Slider
-                     value={formValues.favoriteNumber}
-                     onChange={handleSliderChange("favoriteNumber")}
-                     defaultValue={1}
-                     step={1}
-                     min={1}
-                     max={3}
-                     marks={[
-                        {
-                           value: 1,
-                           label: "1",
-                        },
-                        {
-                           value: 2,
-                           label: "2",
-                        },
-                        {
-                           value: 3,
-                           label: "3",
-                        },
-                     ]}
-                     valueLabelDisplay="off"
+      <Paper sx={{
+         flexGrow: 1,
+         minWidth: 400, margin: 'auto', mt: 4,
+         maxWidth: 500, overflow: 'hidden', px: 3
+      }}>
+         <form onSubmit={handleSubmit}>
+            <Grid container alignItems="center"
+               justifyContent={'center'} spacing={2}
+               justify="center"
+               columns={{ xs: 4, sm: 8, md: 12 }}
+               minWidth={'500px'} sx={{ mt: 3 }}
+            >
+               <Grid item xs={4} sm={4} md={4}>
+                  <TextField
+                     id="name-input"
+                     name="first_name"
+                     label="First Name"
+                     type="text"
+                     value={firstName}
+                     arial-
+                     onChange={handleChange}
                   />
-               </div>
+               </Grid>
+               <Grid item xs={4} sm={4} md={4}>
+                  <TextField
+                     id="name-input"
+                     name="middle_name"
+                     label="Middle Name"
+                     type="text"
+                     value={middleName}
+                     onChange={handleChange}
+                  />
+               </Grid>
+               <Grid item xs={4} sm={4} md={4}>
+                  <TextField
+                     id="name-input"
+                     name="last_name"
+                     label="Last Name"
+                     type="text"
+                     value={lastName}
+                     onChange={handleChange}
+                  />
+               </Grid>
+               <Grid item xs={4} sm={4} md={4}>
+                  <TextField
+                     id="age-input"
+                     name="age"
+                     label="Age"
+                     type="number"
+                     value={age}
+                     onChange={handleChange}
+                  />
+               </Grid>
+               <Grid item xs={4} sm={4} md={4}>
+                  <TextField
+                     error={pMsg}
+                     id="mpn_input"
+                     name="mobile_phone_number"
+                     label="Mobile Number"
+                     type="text"
+                     value={phoneNumber}
+                     onChange={handleChange}
+                  />
+               </Grid>
+               <Grid item xs={2} sm={4} md={4}>
+                  <TextField
+                     error={apMsg}
+                     id="aphn-input"
+                     name="additional_number"
+                     label="Addition Number"
+                     type="text"
+                     value={aphoneNumber}
+                     onChange={handleChange}
+                  />
+               </Grid>
+               <Grid item xs={4} sm={4} md={6}>
+                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                     <Stack>
+                        <DatePicker
+                           disableFuture
+                           label="Responsive"
+                           openTo="year"
+                           views={['year', 'month', 'day']} />
+                     </Stack>
+                  </LocalizationProvider> */}
+               </Grid>
+               <Grid item xs={4} sm={4} md={6}>
+                  {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                     <Stack>
+                        <DatePicker
+                           disableFuture
+                           label="Responsive"
+                           openTo="year"
+                           views={['year', 'month', 'day']} />
+                     </Stack>
+                  </LocalizationProvider> */}
+               </Grid>
+               <Grid item>
+                  <Button variant="contained" color="primary" type="submit">
+                     Submit
+                  </Button>
+
+               </Grid>
             </Grid>
-            <Button variant="contained" color="primary" type="submit">
-               Submit
-            </Button>
-         </Grid>
-      </form>
+         </form>
+      </Paper>
    )
 }
 

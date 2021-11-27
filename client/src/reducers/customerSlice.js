@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCustomersFromServer } from "./AsyncSlice/customerAsync";
+import { getCustomerByIdFromServer, getCustomersFromServer } from "./AsyncSlice/customerAsync";
 
 export const customerSlice = createSlice({
    name: 'customer',
    initialState: {
       customers: [],
-      customer: {},
+      customer: { name: { first_name: '' } },
       isLoading: false,
       success: {
          getSuccess: false,
@@ -67,7 +67,32 @@ export const customerSlice = createSlice({
                status: action.payload.status
             }
          }
-
+      },
+      [getCustomerByIdFromServer.pending]: (state, action) => {
+         return {
+            ...state,
+            isLoading: true
+         }
+      },
+      [getCustomerByIdFromServer.fulfilled]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customer: action.payload,
+            success: {
+               getAllSuccess: true
+            }
+         }
+      },
+      [getCustomerByIdFromServer.rejected]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customerError: {
+               msg: action.payload.data.message,
+               status: action.payload.status
+            }
+         }
       }
    }
 })

@@ -23,7 +23,7 @@ const CustomerTable = ({ history }) => {
                </TableHead>
                <TableBody>
                   {customers.map((customer) => (
-                     <CustomerTableItem customer={customer} history={history} />
+                     <CustomerTableItem key={customer._id} customer={customer} history={history} />
                   ))}
                </TableBody>
             </Table>
