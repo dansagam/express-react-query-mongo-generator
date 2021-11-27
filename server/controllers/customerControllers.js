@@ -2,12 +2,11 @@ import customerService from "../services/customerService.js";
 
 export const getAllCustomerList = async (req, res, next) => {
    try {
+      let jo = req.query.keyword.split(' ')
       const keyword = req.query.keyword ? {
-         name: {
-            first_name: {
-               $regex: req.query.keyword,
-               $options: 'i',
-            },
+         first_name: {
+            $regex: req.query.keyword,
+            $options: 'i',
          },
       } : {}
       const customers = await customerService.getAllCustomers({ ...keyword })
@@ -47,12 +46,11 @@ export const getCustomerByid = async (req, res, next) => {
 
 export const addCustomer = async (req, res, next) => {
    try {
-      const { age, dob, last_name, first_name, mobile_number } = req.body
+      const { age, dob, last_name, middle_name, first_name, mobile_number } = req.body
       const newData = {
-         name: {
-            first_name: first_name,
-            last_name: last_name
-         },
+         first_name: first_name,
+         middle_name: middle_name || '',
+         last_name: last_name,
          age: age,
          dob: new Date(dob),
          phone_number: {
@@ -77,11 +75,12 @@ export const addCustomer = async (req, res, next) => {
 
 export const updateCustomer = async (req, res, next) => {
    try {
-      const { age, dob, last_name, first_name, mobile_number } = req.body
+      const { age, dob, last_name, middle_name, first_name, mobile_number } = req.body
       const foundCustomer = await customerService.getCustomerById(req.params.id)
       if (foundCustomer) {
-         foundCustomer.name.first_name = first_name
-         foundCustomer.name.last_name = last_name
+         foundCustomer.first_name = first_name
+         foundCustomer.last_name = last_name
+         foundCustomer.middle_name = middle_name || ''
          foundCustomer.age = age
          foundCustomer.dob = dob
          foundCustomer.phone_number.mobile_phone_number = mobile_number

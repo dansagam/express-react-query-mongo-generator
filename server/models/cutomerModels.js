@@ -2,18 +2,16 @@ import mongoose from 'mongoose'
 
 const customerSchema = new mongoose.Schema(
    {
-      name: {
-         first_name: {
-            type: String,
-            required: true
-         },
-         middle_name: {
-            type: String,
-         },
-         last_name: {
-            type: String,
-            required: true,
-         }
+      first_name: {
+         type: String,
+         required: true
+      },
+      middle_name: {
+         type: String,
+      },
+      last_name: {
+         type: String,
+         required: true,
       },
       phone_number: {
          mobile_phone_number: {
