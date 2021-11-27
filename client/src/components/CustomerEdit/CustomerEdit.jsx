@@ -60,12 +60,12 @@ const CustomerEdit = () => {
    };
 
    useEffect(() => {
-      if (!customer.name.first_name) {
+      if (!customer.first_name) {
          dispatch(getCustomerByIdFromServer(customerId))
       } else {
-         setFirstName(customer.name.first_name)
-         setLastName(customer.name.last_name)
-         setMiddleName(customer.name.middle_name)
+         setFirstName(customer.first_name)
+         setLastName(customer.last_name)
+         setMiddleName(customer.middle_name)
          setPhoneNumber(customer.phone_number.mobile_phone_number)
          setAPhoneNumber(customer.phone_number.home_phone_number)
       }

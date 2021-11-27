@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {
    AppBar,
@@ -19,7 +19,7 @@ import {
    Notifications as NotificationsIcon,
    MoreVert as MoreIcon
 } from '@mui/icons-material'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
@@ -62,11 +62,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const AppHeader = () => {
+   const navigate = useNavigate()
+   const [keyword, setKeyword] = useState('')
    const [anchorEl, setAnchorEl] = useState(null);
    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
    const isMenuOpen = Boolean(anchorEl);
    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+   const searchHandler = useCallback((e) => {
+      e.preventDefault()
+      if (keyword.trim()) {
+         navigate(`/search/${keyword}`)
+      } else {
+         navigate('/')
+      }
+   }, [keyword, navigate])
 
    const handleProfileMenuOpen = (event) => {
       setAnchorEl(event.currentTarget);
@@ -182,15 +193,19 @@ const AppHeader = () => {
                      Customers List
                   </NavLink>
                </Typography>
-               <Search>
-                  <SearchIconWrapper>
-                     <SearchIcon />
-                  </SearchIconWrapper>
-                  <StyledInputBase
-                     placeholder="Search…"
-                     inputProps={{ 'aria-label': 'search' }}
-                  />
-               </Search>
+               <form onSubmit={searchHandler}>
+                  <Search>
+                     <SearchIconWrapper>
+                        <SearchIcon />
+                     </SearchIconWrapper>
+                     <StyledInputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        onChange={(e) => setKeyword(e.target.value)}
+                     />
+                  </Search>
+
+               </form>
                <Box sx={{ flexGrow: 1 }} />
                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                   <IconButton size="large" aria-label="sho new mails" color="inherit">

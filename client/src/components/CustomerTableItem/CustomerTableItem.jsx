@@ -37,7 +37,7 @@ const Row = (props) => {
                </IconButton>
             </TableCell>
             <TableCell component={'th'} scope='row'>
-               {customerRow.name.first_name + " " + customerRow.name.last_name}
+               {customerRow.first_name + " " + customerRow.last_name}
             </TableCell>
             <TableCell component={'th'} scope='row'>
                {customerRow.phone_number.mobile_phone_number}
@@ -73,8 +73,8 @@ const Row = (props) => {
                         </TableHead>
                         <TableBody>
                            <TableRow>
-                              <TableCell>{customerRow.name.first_name}</TableCell>
-                              <TableCell>{customerRow.name.last_name}</TableCell>
+                              <TableCell>{customerRow.first_name}</TableCell>
+                              <TableCell>{customerRow.last_name}</TableCell>
                               <TableCell>
                                  {customerRow.phone_number.mobile_phone_number}
                               </TableCell>
@@ -103,10 +103,8 @@ const Row = (props) => {
 Row.propTypes = {
    customerRow: PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      name: {
-         first_name: PropTypes.string.isRequired,
-         last_name: PropTypes.string.isRequired
-      },
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
       phone_number: {
          mobile_phone_number: PropTypes.number.isRequired
       },

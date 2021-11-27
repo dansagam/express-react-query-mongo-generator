@@ -8,9 +8,9 @@ import {
 } from "../../asyncFunction/customerAsyncFunc";
 
 export const getCustomersFromServer = createAsyncThunk('customer/getCustomers',
-   async (arg, { getState, rejectWithValue }) => {
+   async ({ keyword = '' }, { getState, rejectWithValue }) => {
       try {
-         const { data } = await getCustomersFunc()
+         const { data } = await getCustomersFunc(keyword)
          return data.data
       } catch (err) {
          return rejectWithValue(err.response)
@@ -33,10 +33,8 @@ export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomer'
          const { first_name, last_name, mobile_number, age, dob } = newData
 
          const posted = {
-            name: {
-               first_name: first_name,
-               last_name: last_name
-            },
+            first_name: first_name,
+            last_name: last_name,
             phone_number: {
                mobile_phone_number: mobile_number
             },
@@ -75,10 +73,8 @@ export const updatedCustomerToServer = createAsyncThunk('customer/updateCustomer
          const { _id, first_name, last_name, mobile_number, age, dob } = receivedData
 
          const posted = {
-            name: {
-               first_name: first_name,
-               last_name: last_name
-            },
+            first_name: first_name,
+            last_name: last_name,
             phone_number: {
                mobile_phone_number: mobile_number
             },

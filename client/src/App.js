@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import AppHeader from './components/AppTopBar/AppHeader';
 import { getCustomersFromServer } from './reducers/AsyncSlice/customerAsync';
 import HomeRoutes from './components/HomeRoutes/HomeRoutes';
@@ -12,8 +12,9 @@ import { Container } from '@mui/material';
 
 function App() {
    const dispatch = useDispatch()
+   const { keyword } = useParams()
    useEffect(() => {
-      dispatch(getCustomersFromServer())
+      dispatch(getCustomersFromServer({ keyword }))
    })
    return (
       <div className="App">
@@ -24,6 +25,11 @@ function App() {
                   name='home-route'
                   exact path={'/'}
                   element={<HomeRoutes />}
+               />
+               <Route
+                  name='home-route'
+                  exact path={'search/:keyword'}
+                  element={<CustomerRoutes />}
                />
                <Route
                   name='customerlist-route'

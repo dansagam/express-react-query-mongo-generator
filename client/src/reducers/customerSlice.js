@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCustomerByIdFromServer, getCustomersFromServer } from "./AsyncSlice/customerAsync";
+import { addNewCustomerToServer, deleteCustomerFromServer, getCustomerByIdFromServer, getCustomersFromServer, updatedCustomerToServer } from "./AsyncSlice/customerAsync";
 
 export const customerSlice = createSlice({
    name: 'customer',
    initialState: {
       customers: [],
-      customer: { name: { first_name: '' } },
+      customer: { first_name: '' },
       isLoading: false,
       success: {
          getSuccess: false,
@@ -35,7 +35,8 @@ export const customerSlice = createSlice({
                getSuccess: false,
                getAllSuccess: false,
                addSuccess: false,
-               updateSuccess: false
+               updateSuccess: false,
+               deleteSuccess: false
             }
          }
       }
@@ -93,7 +94,87 @@ export const customerSlice = createSlice({
                status: action.payload.status
             }
          }
-      }
+      },
+      [addNewCustomerToServer.pending]: (state, action) => {
+         return {
+            ...state,
+            isLoading: true
+         }
+      },
+      [addNewCustomerToServer.fulfilled]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customers: [action.payload, ...state.customers],
+            success: {
+               addSuccess: true,
+            }
+         }
+
+      },
+      [addNewCustomerToServer.rejected]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customerError: {
+               msg: action.payload.data.message,
+               status: action.payload.status
+            }
+         }
+      },
+      [deleteCustomerFromServer.pending]: (state, action) => {
+         return {
+            ...state,
+            isLoading: true
+         }
+      },
+      [deleteCustomerFromServer.fulfilled]: (state, action) => {
+         return {
+            ...state,
+            customers: state.customers.filter(customer => customer._id !== action.payload),
+            isLoading: false,
+            success: {
+               deleteSuccess: false
+            }
+         }
+      },
+      [deleteCustomerFromServer.rejected]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customerError: {
+               msg: action.payload.data.message,
+               status: action.payload.status
+            }
+         }
+      },
+      [updatedCustomerToServer.pending]: (state, action) => {
+         return {
+            ...state,
+            isLoading: true
+         }
+      },
+      [updatedCustomerToServer.fulfilled]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customer: action.payload,
+            success: {
+               updateSuccess: true
+            },
+         }
+
+      },
+      [updatedCustomerToServer.rejected]: (state, action) => {
+         return {
+            ...state,
+            isLoading: false,
+            customerError: {
+               msg: action.payload.data.message,
+               status: action.payload.status
+            }
+         }
+      },
    }
 })
 

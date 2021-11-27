@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const getCustomersFunc = async () => {
-   const response = await axios.get('/api/v2/customers')
+export const getCustomersFunc = async (keyword) => {
+   const response = await axios.get(`/api/v2/customers?keyword=${keyword}`)
    return response
 }
 export const getCustomerByIdFunc = async (id) => {
