@@ -2,12 +2,20 @@ import customerService from "../services/customerService.js";
 
 export const getAllCustomerList = async (req, res, next) => {
    try {
-      let jo = req.query.keyword.split(' ')
+      let jo, godie
+      if (req.query.keyword) {
+         jo = req.query.keyword
+         godie = jo.split(" ")
+      }
       const keyword = req.query.keyword ? {
          first_name: {
-            $regex: req.query.keyword,
+            $regex: godie[0] || '',
             $options: 'i',
          },
+         last_name: {
+            $regex: godie[1] || '',
+            $options: 'i'
+         }
       } : {}
       const customers = await customerService.getAllCustomers({ ...keyword })
       if (customers) {
