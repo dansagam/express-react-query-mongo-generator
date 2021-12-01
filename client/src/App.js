@@ -8,18 +8,20 @@ import HomeRoutes from './components/HomeRoutes/HomeRoutes';
 import CustomerRoutes from './components/CustomerRoutes/CustomerRoutes';
 import CustomerEdit from './components/CustomerEdit/CustomerEdit';
 import { Container } from '@mui/material';
+import CustomerNew from './components/CustomerNew/CustomerNew';
 
 
 function App() {
+   console.log(process.env.REACT_APP_MOCK_DATA, process.env.REACT_APP_SERVER_URL)
    const dispatch = useDispatch()
    const { keyword } = useParams()
    useEffect(() => {
       dispatch(getCustomersFromServer({ keyword }))
    })
    return (
-      <div className="App">
+      <div className="App" data-testid={'mainContent'}>
          <AppHeader />
-         <Container>
+         <Container maxWidth="md">
             <Routes>
                <Route
                   name='home-route'
@@ -30,6 +32,11 @@ function App() {
                   name='home-route'
                   exact path={'search/:keyword'}
                   element={<CustomerRoutes />}
+               />
+               <Route
+                  name='new-customer-route'
+                  path={'customernew'}
+                  element={<CustomerNew />}
                />
                <Route
                   name='customerlist-route'

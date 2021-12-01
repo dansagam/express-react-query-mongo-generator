@@ -7,7 +7,7 @@ import {
    updateCustomerFunc
 } from "../../asyncFunction/customerAsyncFunc";
 
-export const getCustomersFromServer = createAsyncThunk('customer/getCustomers',
+export const getCustomersFromServer = createAsyncThunk('customer/getCustomersFromServer',
    async ({ keyword = '' }, { getState, rejectWithValue }) => {
       try {
          const { data } = await getCustomersFunc(keyword)
@@ -17,7 +17,7 @@ export const getCustomersFromServer = createAsyncThunk('customer/getCustomers',
       }
    }
 )
-export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerById',
+export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerByIdFromServer',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await getCustomerByIdFunc(id)
@@ -27,17 +27,17 @@ export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerB
       }
    }
 )
-export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomer',
+export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomerToServer',
    async (newData, { rejectWithValue }) => {
       try {
-         const { first_name, last_name, mobile_number, age, dob } = newData
+         const { first_name, last_name, middle_name, mobile_number, additional_phone_number, age, dob } = newData
 
          const posted = {
             first_name: first_name,
+            middle_name: middle_name,
             last_name: last_name,
-            phone_number: {
-               mobile_phone_number: mobile_number
-            },
+            mobile_number: mobile_number,
+            additional_phone_number: additional_phone_number,
             age: age,
             dob: dob
          }
@@ -56,7 +56,7 @@ export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomer'
 )
 
 
-export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustomer',
+export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustomerFromServer',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await deleteCustomerFunc(id)
@@ -67,17 +67,16 @@ export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustome
    }
 )
 
-export const updatedCustomerToServer = createAsyncThunk('customer/updateCustomer',
+export const updatedCustomerToServer = createAsyncThunk('customer/updatedCustomerToServer',
    async (receivedData, { rejectWithValue }) => {
       try {
-         const { _id, first_name, last_name, mobile_number, age, dob } = receivedData
+         const { _id, first_name, last_name, middle_name, mobile_number, age, dob } = receivedData
 
          const posted = {
             first_name: first_name,
+            middle_name: middle_name,
             last_name: last_name,
-            phone_number: {
-               mobile_phone_number: mobile_number
-            },
+            mobile_number: mobile_number,
             age: age,
             dob: dob
          }
