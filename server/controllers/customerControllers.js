@@ -54,16 +54,17 @@ export const getCustomerByid = async (req, res, next) => {
 
 export const addCustomer = async (req, res, next) => {
    try {
-      const { age, dob, last_name, middle_name, first_name, mobile_number } = req.body
+      const { age, dob, last_name,
+         additional_phone_number, middle_name, first_name, mobile_number
+      } = req.body
       const newData = {
          first_name: first_name,
          middle_name: middle_name || '',
          last_name: last_name,
          age: age,
          dob: new Date(dob),
-         phone_number: {
-            mobile_phone_number: mobile_number
-         }
+         mobile_number: mobile_number,
+         additional_phone_number: additional_phone_number
       }
       const addedCustomer = await customerService.addCustomer(newData)
       if (addedCustomer) {
@@ -83,7 +84,9 @@ export const addCustomer = async (req, res, next) => {
 
 export const updateCustomer = async (req, res, next) => {
    try {
-      const { age, dob, last_name, middle_name, first_name, mobile_number } = req.body
+      const { age, dob,
+         additional_phone_number, last_name, middle_name, first_name, mobile_number
+      } = req.body
       const foundCustomer = await customerService.getCustomerById(req.params.id)
       if (foundCustomer) {
          foundCustomer.first_name = first_name
@@ -91,7 +94,8 @@ export const updateCustomer = async (req, res, next) => {
          foundCustomer.middle_name = middle_name || ''
          foundCustomer.age = age
          foundCustomer.dob = dob
-         foundCustomer.phone_number.mobile_phone_number = mobile_number
+         foundCustomer.mobile_number = mobile_number
+         foundCustomer.additional_phone_number = additional_phone_number || ''
          const updatedCustomer = await customerService.updateCustomer(foundCustomer._id, foundCustomer)
          if (updatedCustomer) {
             res.status(201).json({
