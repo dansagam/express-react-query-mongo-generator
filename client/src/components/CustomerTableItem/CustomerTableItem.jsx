@@ -11,7 +11,7 @@ import {
 } from '@mui/icons-material'
 import PropTypes from 'prop-types'
 // import { useSelector } from 'react-redux'
-import { currentAge, transformDate } from '../../Utils/dateFuncFormater'
+import { currentAge, phoneNumberFormat, transformDate } from '../../Utils/dateFuncFormater'
 
 
 
@@ -40,9 +40,9 @@ const Row = (props) => {
                {customerRow.first_name + " " + customerRow.last_name}
             </TableCell>
             <TableCell component={'th'} scope='row'>
-               {customerRow.mobile_number}
+               {phoneNumberFormat(customerRow.mobile_number)}
             </TableCell>
-            <TableCell component={'th'} scope='row'>{transformDate(customerRow.created)}</TableCell>
+            <TableCell component={'th'} scope='row'>{transformDate(customerRow.createdAt)}</TableCell>
             <TableCell>
                <IconButton
                   aria-label="expand row"
@@ -76,7 +76,7 @@ const Row = (props) => {
                               <TableCell>{customerRow.first_name}</TableCell>
                               <TableCell>{customerRow.last_name}</TableCell>
                               <TableCell>
-                                 {customerRow.mobile_number}
+                                 {phoneNumberFormat(customerRow.mobile_number)}
                               </TableCell>
                               <TableCell align='right'>
                                  {`${currentAge(customerRow.dob)}`}
@@ -85,7 +85,7 @@ const Row = (props) => {
                                  {transformDate(customerRow.dob)}
                               </TableCell>
                               <TableCell align='right'>
-                                 {transformDate(customerRow.created)}
+                                 {transformDate(customerRow.createdAt)}
                               </TableCell>
                            </TableRow>
                         </TableBody>
