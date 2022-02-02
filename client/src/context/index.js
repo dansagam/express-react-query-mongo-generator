@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from '@mui/material/styles'
 
 const AppProvider = (props) => {
-   return <div></div>;
+   return <div></div>
 };
 
 AppProvider.propTypes = {
