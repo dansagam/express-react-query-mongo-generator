@@ -30,6 +30,8 @@
             "endOfLine": "auto",
             "arrowParens": "always"
          }
-      ]
+      ],
+      "no-console": "off",
+      "no-unused-vars": "off"
    }
 }
