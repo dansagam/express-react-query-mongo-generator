@@ -24,6 +24,7 @@
             "endOfLine": "auto",
             "arrowParens": "always"
          }
-      ]
+      ],
+      "no-undef": "off"
    }
 }
