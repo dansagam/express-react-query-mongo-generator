@@ -8,9 +8,10 @@ export const getCustomersFunc = async (keyword) => {
       return [...customerLists]
    } else {
       const apiUrl = process.env.REACT_APP_SERVER_URL || ''
-      const response = await axios.get(`${apiUrl}/api/v2/customers?keyword=${keyword}`)
+      const response = await axios.get(
+         `${apiUrl}/api/v2/customers?keyword=${keyword}`
+      )
       return response
-
    }
 }
 export const getCustomerByIdFunc = async (id) => {
@@ -29,14 +30,22 @@ export const addCustomerFunc = async (newData, config) => {
       return [...customerLists, newData]
    } else {
       const apiUrl = process.env.REACT_APP_SERVER_URL || ''
-      const response = await axios.post(`${apiUrl}/api/v2/customers`, newData, config)
+      const response = await axios.post(
+         `${apiUrl}/api/v2/customers`,
+         newData,
+         config
+      )
       return response
    }
 }
 
 export const updateCustomerFunc = async (id, newData, config) => {
    const apiUrl = process.env.REACT_APP_SERVER_URL || ''
-   const response = await axios.put(`${apiUrl}/api/v2/customers/${id}`, newData, config)
+   const response = await axios.put(
+      `${apiUrl}/api/v2/customers/${id}`,
+      newData,
+      config
+   )
    return response
 }
 

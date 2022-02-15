@@ -5,11 +5,11 @@ export const transformDate = (dateString) => {
 }
 export const currentAge = (dateString) => {
    let myDate = new Date(dateString)
-   let diffDate = (Date.now() - myDate.getTime())
+   let diffDate = Date.now() - myDate.getTime()
    return Math.round(diffDate / 31557600000)
 }
 export const currentAgeDatePicker = (dataString) => {
-   let diffDate = (Date.now() - dataString.getTime())
+   let diffDate = Date.now() - dataString.getTime()
    return Math.round(diffDate / 31557600000)
 }
 
@@ -24,12 +24,10 @@ export const phoneNumberFormat = (phoneNumber) => {
       // }
       if (phoneNumber.length === 6) {
          return phoneNumber.replace(/(\d{3})(\d{3})/, '$1-$2')
-
       } else if (phoneNumber.length === 10 || phoneNumber.length > 6) {
-         return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
+         return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
       }
       return phoneNumber
-
    }
 }
 

@@ -1,6 +1,5 @@
 import reducer, { DEFAULT_STATE } from './customerSlice'
 
-
 describe('customer reducer test', () => {
    let actualState, initialState
    beforeEach(() => {
@@ -11,18 +10,24 @@ describe('customer reducer test', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomersFromServer/fulfilled',
-               payload: [{ id: 1, name: 'kayode' }, { id: 2, name: 'isaiah' }]
+               payload: [
+                  { id: 1, name: 'kayode' },
+                  { id: 2, name: 'isaiah' },
+               ],
             })
          })
          it('should return the mocke data', () => {
-            expect(actualState.customers).toEqual([{ id: 1, name: 'kayode' }, { id: 2, name: 'isaiah' }])
+            expect(actualState.customers).toEqual([
+               { id: 1, name: 'kayode' },
+               { id: 2, name: 'isaiah' },
+            ])
          })
       })
       describe('when null is passed as payload', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomersFromServer/fulfilled',
-               payload: null
+               payload: null,
             })
          })
          it('should not update the customerlist', () => {
@@ -33,7 +38,7 @@ describe('customer reducer test', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomersFromServer/fulfilled',
-               payload: undefined
+               payload: undefined,
             })
          })
          it('should not update the customerlist state', () => {
@@ -54,7 +59,7 @@ describe('customer reducer test', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomerByIdFromServer/fulfilled',
-               payload: { id: 'kayode' }
+               payload: { id: 'kayode' },
             })
          })
          it('should return the passed data', () => {
@@ -65,7 +70,7 @@ describe('customer reducer test', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomerByIdFromServer/fulfilled',
-               payload: null
+               payload: null,
             })
          })
          it('should return state', () => {
@@ -76,7 +81,7 @@ describe('customer reducer test', () => {
          beforeEach(() => {
             actualState = reducer(initialState, {
                type: 'customer/getCustomerByIdFromServer/fulfilled',
-               payload: undefined
+               payload: undefined,
             })
          })
          it('should return state and not change the customer', () => {

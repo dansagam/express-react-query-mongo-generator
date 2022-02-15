@@ -1,9 +1,11 @@
 import {
    getCustomersFunc,
    getCustomerByIdFunc,
-   addCustomerFunc
-} from "./customerAsyncFunc";
-import MOCK_CUSTOMER_LISTS, { newData } from '../mockdata/CUSTOMER_LIST_MOCK_DATA'
+   addCustomerFunc,
+} from './customerAsyncFunc'
+import MOCK_CUSTOMER_LISTS, {
+   newData,
+} from '../mockdata/CUSTOMER_LIST_MOCK_DATA'
 import MOCK_CUSTOMER_DETAIL from '../mockdata/CUSTOMER_FULL_MOCK_DATA'
 
 //this is the get customer list test component
@@ -29,7 +31,7 @@ describe('get Customer List test', () => {
    })
 })
 
-//this is the getCustomerByIdFunc testing component 
+//this is the getCustomerByIdFunc testing component
 describe('get the customer details', () => {
    let expectedCustomer
    describe('mock data flag is set', () => {
@@ -56,8 +58,8 @@ describe('get the customer details', () => {
 describe('test the Add data func', () => {
    const config = {
       headers: {
-         'Content-Type': 'application/json'
-      }
+         'Content-Type': 'application/json',
+      },
    }
    let addedCustomer
    describe('mock data flag is set', () => {

@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { useCallback, useState } from 'react'
+import { styled, alpha } from '@mui/material/styles'
 import {
    AppBar,
    Box,
@@ -9,17 +9,17 @@ import {
    InputBase,
    Badge,
    MenuItem,
-   Menu
-} from '@mui/material';
+   Menu,
+} from '@mui/material'
 import {
    Menu as MenuIcon,
    Search as SearchIcon,
    AccountCircle,
    Mail as MailIcon,
    Notifications as NotificationsIcon,
-   MoreVert as MoreIcon
+   MoreVert as MoreIcon,
 } from '@mui/icons-material'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
    position: 'relative',
@@ -35,7 +35,7 @@ const Search = styled('div')(({ theme }) => ({
       marginLeft: theme.spacing(3),
       width: 'auto',
    },
-}));
+}))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
    padding: theme.spacing(0, 2),
@@ -45,7 +45,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
-}));
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
    color: 'inherit',
@@ -59,44 +59,47 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
          width: '20ch',
       },
    },
-}));
+}))
 
 const AppHeader = () => {
    const navigate = useNavigate()
    const [keyword, setKeyword] = useState('')
-   const [anchorEl, setAnchorEl] = useState(null);
-   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+   const [anchorEl, setAnchorEl] = useState(null)
+   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
 
-   const isMenuOpen = Boolean(anchorEl);
-   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+   const isMenuOpen = Boolean(anchorEl)
+   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
-   const searchHandler = useCallback((e) => {
-      e.preventDefault()
-      if (keyword.trim()) {
-         navigate(`/search/${keyword}`)
-      } else {
-         navigate('/')
-      }
-   }, [keyword, navigate])
+   const searchHandler = useCallback(
+      (e) => {
+         e.preventDefault()
+         if (keyword.trim()) {
+            navigate(`/search/${keyword}`)
+         } else {
+            navigate('/')
+         }
+      },
+      [keyword, navigate]
+   )
 
    const handleProfileMenuOpen = (event) => {
-      setAnchorEl(event.currentTarget);
-   };
+      setAnchorEl(event.currentTarget)
+   }
 
    const handleMobileMenuClose = () => {
-      setMobileMoreAnchorEl(null);
-   };
+      setMobileMoreAnchorEl(null)
+   }
 
    const handleMenuClose = () => {
-      setAnchorEl(null);
-      handleMobileMenuClose();
-   };
+      setAnchorEl(null)
+      handleMobileMenuClose()
+   }
 
    const handleMobileMenuOpen = (event) => {
-      setMobileMoreAnchorEl(event.currentTarget);
-   };
+      setMobileMoreAnchorEl(event.currentTarget)
+   }
 
-   const menuId = 'primary-search-account-menu';
+   const menuId = 'primary-search-account-menu'
    const renderMenu = (
       <Menu
          anchorEl={anchorEl}
@@ -116,9 +119,9 @@ const AppHeader = () => {
          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       </Menu>
-   );
+   )
 
-   const mobileMenuId = 'primary-search-account-menu-mobile';
+   const mobileMenuId = 'primary-search-account-menu-mobile'
    const renderMobileMenu = (
       <Menu
          anchorEl={mobileMoreAnchorEl}
@@ -136,7 +139,11 @@ const AppHeader = () => {
          onClose={handleMobileMenuClose}
       >
          <MenuItem>
-            <IconButton size="large" aria-label="show new mails" color="inherit">
+            <IconButton
+               size="large"
+               aria-label="show new mails"
+               color="inherit"
+            >
                <Badge badgeContent={0} color="error">
                   <MailIcon />
                </Badge>
@@ -168,7 +175,7 @@ const AppHeader = () => {
             <p>Profile</p>
          </MenuItem>
       </Menu>
-   );
+   )
 
    return (
       <Box sx={{ flexGrow: 1 }}>
@@ -189,7 +196,10 @@ const AppHeader = () => {
                   component="div"
                   sx={{ display: { xs: 'none', sm: 'block' } }}
                >
-                  <NavLink to={'/'} style={{ textDecoration: "none", color: "inherit" }}>
+                  <NavLink
+                     to={'/'}
+                     style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
                      Customers List
                   </NavLink>
                </Typography>
@@ -204,11 +214,14 @@ const AppHeader = () => {
                         onChange={(e) => setKeyword(e.target.value)}
                      />
                   </Search>
-
                </form>
                <Box sx={{ flexGrow: 1 }} />
                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                  <IconButton size="large" aria-label="sho new mails" color="inherit">
+                  <IconButton
+                     size="large"
+                     aria-label="sho new mails"
+                     color="inherit"
+                  >
                      <Badge badgeContent={0} color="error">
                         <MailIcon />
                      </Badge>
@@ -251,8 +264,7 @@ const AppHeader = () => {
          {renderMobileMenu}
          {renderMenu}
       </Box>
-   );
+   )
 }
 
 export default AppHeader
-

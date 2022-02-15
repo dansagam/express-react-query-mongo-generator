@@ -1,13 +1,14 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
    addCustomerFunc,
    deleteCustomerFunc,
    getCustomerByIdFunc,
    getCustomersFunc,
-   updateCustomerFunc
-} from "../../asyncFunction/customerAsyncFunc";
+   updateCustomerFunc,
+} from '../../asyncFunction/customerAsyncFunc'
 
-export const getCustomersFromServer = createAsyncThunk('customer/getCustomersFromServer',
+export const getCustomersFromServer = createAsyncThunk(
+   'customer/getCustomersFromServer',
    async ({ keyword = '' }, { getState, rejectWithValue }) => {
       try {
          const { data } = await getCustomersFunc(keyword)
@@ -17,7 +18,8 @@ export const getCustomersFromServer = createAsyncThunk('customer/getCustomersFro
       }
    }
 )
-export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerByIdFromServer',
+export const getCustomerByIdFromServer = createAsyncThunk(
+   'customer/getCustomerByIdFromServer',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await getCustomerByIdFunc(id)
@@ -27,10 +29,19 @@ export const getCustomerByIdFromServer = createAsyncThunk('customer/getCustomerB
       }
    }
 )
-export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomerToServer',
+export const addNewCustomerToServer = createAsyncThunk(
+   'customer/addNewCustomerToServer',
    async (newData, { rejectWithValue }) => {
       try {
-         const { first_name, last_name, middle_name, mobile_number, additional_phone_number, age, dob } = newData
+         const {
+            first_name,
+            last_name,
+            middle_name,
+            mobile_number,
+            additional_phone_number,
+            age,
+            dob,
+         } = newData
 
          const posted = {
             first_name: first_name,
@@ -39,12 +50,12 @@ export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomerT
             mobile_number: mobile_number,
             additional_phone_number: additional_phone_number,
             age: age,
-            dob: dob
+            dob: dob,
          }
          const config = {
             headers: {
-               "Content-Type": "application/json"
-            }
+               'Content-Type': 'application/json',
+            },
          }
 
          const { data } = await addCustomerFunc(posted, config)
@@ -55,8 +66,8 @@ export const addNewCustomerToServer = createAsyncThunk('customer/addNewCustomerT
    }
 )
 
-
-export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustomerFromServer',
+export const deleteCustomerFromServer = createAsyncThunk(
+   'customer/deleteCustomerFromServer',
    async (id, { rejectWithValue }) => {
       try {
          const { data } = await deleteCustomerFunc(id)
@@ -67,10 +78,19 @@ export const deleteCustomerFromServer = createAsyncThunk('customer/deleteCustome
    }
 )
 
-export const updatedCustomerToServer = createAsyncThunk('customer/updatedCustomerToServer',
+export const updatedCustomerToServer = createAsyncThunk(
+   'customer/updatedCustomerToServer',
    async (receivedData, { rejectWithValue }) => {
       try {
-         const { _id, first_name, last_name, middle_name, mobile_number, age, dob } = receivedData
+         const {
+            _id,
+            first_name,
+            last_name,
+            middle_name,
+            mobile_number,
+            age,
+            dob,
+         } = receivedData
 
          const posted = {
             first_name: first_name,
@@ -78,18 +98,17 @@ export const updatedCustomerToServer = createAsyncThunk('customer/updatedCustome
             last_name: last_name,
             mobile_number: mobile_number,
             age: age,
-            dob: dob
+            dob: dob,
          }
          const config = {
             headers: {
-               "Content-Type": "application/json"
-            }
+               'Content-Type': 'application/json',
+            },
          }
          const { data } = await updateCustomerFunc(_id, posted, config)
          return data.data
       } catch (err) {
          return rejectWithValue(err.response)
       }
-
    }
 )
